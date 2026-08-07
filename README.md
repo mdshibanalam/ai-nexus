@@ -1,4 +1,4 @@
-# 🤖 AI Nexus - The Ultimate AI Search Engine & Directory
+# 🤖 AI Nexus - The Ultimate AI Search Engine
 
 **AI Nexus** is a modern, semantic search engine and curated SaaS directory designed to help developers, creators, and engineers discover the exact AI tools and workflows they need. 
 
