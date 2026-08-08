@@ -6,6 +6,44 @@ Unlike traditional keyword-matching directories, AI Nexus is powered by **Google
 
 ---
 
+## 🏗️ Architecture Flow
+
+When a user submits a natural language query, the request flows through a decoupled intelligence and data-filtering pipeline:
+
+```text
+[ User Query / Problem Intent ]
+              │
+              ▼
+    [ Streamlit Web UI ]
+              │
+              ▼
+   [ Gemini 2.5 Flash LLM ]  ──> (Intent Matching & Schema Alignment)──┐
+              │                                                        │
+              ▼                                                        ▼
+     [ Pandas DataFrame ]  <── (Primary Key Database Filtering)────────┘
+              │
+              ▼
+   [ Rendered UI Tool Cards ]
+
+```
+
+1. **Query Ingestion:** The user inputs a natural language task into the Streamlit frontend.
+2. **Semantic Processing:** The query and schema context are dispatched to `gemini-2.5-flash`.
+3. **Data Filtering:** The LLM returns structured identifiers matching primary keys in the local database, which Pandas filters instantly.
+4. **UI Rendering:** Clean SaaS cards render dynamically with power prompts, workflows, and tutorials.
+
+---
+
+## 🧠 Prompt Engineering & Schema Alignment
+
+A core technical challenge in building LLM-backed search engines is preventing hallucinated tool recommendations. **AI Nexus** solves this through strict **System Prompt Guardrails & Schema Alignment**:
+
+* **Context Injection:** The database's primary keys (`Tool Name`), descriptions, and categories are dynamically compiled into the LLM system prompt on execution.
+* **Deterministic Output Formatting:** The LLM is strictly constrained via system instructions to return either a conversational flag (`CHAT: <response>`) for general inquiries, or a clean, comma-separated structured list of primary keys that exist within the database schema.
+* **Zero-Hallucination Filtering:** Because the LLM outputs exact database keys rather than arbitrary text, Pandas safely intersects the LLM response against the CSV schema without throwing key errors or surfacing fake URLs.
+
+---
+
 ## ✨ Key Features
 
 * 🧠 **Semantic Intent Search:** Powered by Google's `gemini-2.5-flash` LLM to understand natural language problem statements and intelligently route queries to the right tools.
@@ -17,20 +55,19 @@ Unlike traditional keyword-matching directories, AI Nexus is powered by **Google
 
 ---
 
-## 🏗️ Project Organization Structure
+## 📂 Project Organization Structure
 
 ```text
-AI_Project/
+ai-nexus/
 │
 ├── .streamlit/
-│   ├── config.toml         # UI Dark-mode theme & layout styling settings
-│   └── secrets.toml        # Local environment variables 
-│
-├── app.py                  # Main application dashboard & Gemini AI routing engine
-├── tools.csv               # Read/Write database containing curated AI tool cards
-├── audit.py                # QA script to programmatically check for broken URLs
-├── requirements.txt        # Python package dependencies for deployment
-└── README.md               # Project documentation & setup instructions
+│   ├── config.toml       
+│   └── secrets.toml     
+├── app.py               
+├── tools.csv            
+├── audit.py            
+├── requirements.txt     
+└── README.md           
 ```
 
 ---
@@ -61,6 +98,8 @@ pip install -r requirements.txt
 GEMINI_API_KEY = "AIzaSyYourActualAPIKeyHere..."
 ```
 
+
+
 ### 4. Launch the App
 
 ```bash
@@ -68,6 +107,14 @@ streamlit run app.py
 ```
 
 Open your browser to `http://localhost:8501` to use **AI Nexus**.
+
+---
+
+## 🗺️ Future Roadmap
+
+* **Database Migration:** Upgrade persistence from local `.csv` storage to a scalable **SQLite / PostgreSQL** database (or Supabase) to support real-time, persistent SaaS tool submissions.
+* **Community & Authentication:** Implement user authentication (OAuth), verified developer badges, and a community upvoting/bookmarking system.
+* **Automated Maintenance:** Integrate automated daily URL health checking via **GitHub Actions** (extending our local `audit.py` QA script to run continuously in CI/CD).
 
 ---
 
