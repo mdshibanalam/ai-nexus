@@ -1,5 +1,7 @@
 # 🤖 AI Nexus - The Ultimate AI Search Engine
 
+**🚀 Live Application:** `https://md-shiban-alam-ai-powered-medical-diagnosis-system.streamlit.app/`
+
 **AI Nexus** is a modern, semantic search engine and curated SaaS directory designed to help developers, creators, and engineers discover the exact AI tools and workflows they need. 
 
 Unlike traditional keyword-matching directories, AI Nexus is powered by **Google Gemini 2.5 Flash**, allowing users to search using conversational problem statements and intents (e.g., *"How do I edit videos for free?"* or *"I need to scrape a website"*).
